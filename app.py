@@ -1,8 +1,9 @@
 import base64
-
+import requests 
 import streamlit as st
 from PIL import Image
 from openai import OpenAI
+from streamlit_geolocation import streamlit_geolocation 
 
 
 st.set_page_config(
@@ -24,9 +25,82 @@ st.warning(
 )
 
 
-client = OpenAI(
-    api_key=st.secrets["OPENAI_API_KEY"]
+st.subheader("📍 Mould reports near you")
+
+st.write(
+    "Allow location access to see general mould information "
+    "for your area. Your exact location will not be displayed."
 )
+
+location = streamlit_geolocation()
+
+if location and location.get("latitude") and location.get("longitude"):
+
+    st.success("Location detected.")
+
+    latitude = location["latitude"]
+    longitude = location["longitude"]
+
+    try:
+
+        response = requests.get(
+            "https://nominatim.openstreetmap.org/reverse",
+            params={
+                "lat": latitude,
+                "lon": longitude,
+                "format": "json",
+                "zoom": 10
+            },
+            headers={
+                "User-Agent": "Mould-Visual-Classifier"
+            },
+            timeout=10
+        )
+
+        data = response.json()
+
+        address = data.get("address", {})
+
+        area = (
+            address.get("town")
+            or address.get("city")
+            or address.get("village")
+            or address.get("county")
+            or "your general area"
+        )
+
+        county = address.get("county", "")
+
+        st.subheader("📍 Your general area")
+
+        if county:
+            st.write(f"**{area}, {county}**")
+        else:
+            st.write(f"**{area}**")
+
+        st.info(
+            "Your exact coordinates are not displayed. "
+            "This area will be used for local information."
+        )
+
+    except Exception:
+
+        st.warning(
+            "We could detect your location, but could not "
+            "determine the general area."
+        )
+
+else:
+
+    st.info(
+        "Location has not been provided. You can still use "
+        "the mould image analysis without location."
+    ) 
+
+    st.info(
+        "Location has not been provided. You can still use the "
+        "mould image analysis without location."
+    ) 
 
 
 uploaded_file = st.file_uploader(
