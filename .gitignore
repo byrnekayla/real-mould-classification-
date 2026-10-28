@@ -1,2 +1,5 @@
 .streamlit/secrets.toml
 .venv/
+google_credentials.json
+__pycache__/
+google_credentials.json (1).json

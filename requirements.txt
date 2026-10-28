@@ -1,4 +1,4 @@
 streamlit
-openai
-stallstreamlit-geolocation
-supabase
+streamlit-geolocation
+google-genai
+gspread
