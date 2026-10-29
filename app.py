@@ -256,6 +256,16 @@ else:
 st.divider()
 st.subheader("📝 Submit a general mould report")
 
+st.info(
+    "🔒 Privacy notice: Submitting a mould report is optional. "
+    "Please enter only your town or general area, not your home address "
+    "or other personal information. "
+    "Your submitted area, optional county, report type and submission "
+    "date will be stored in a private Google Sheet for reviewing "
+    "user-submitted mould reports. "
+    "Reports are not independently verified."
+)
+
 st.write(
     "You can voluntarily submit a report for your general area. "
     "Reports are user-submitted and are not independently verified."
