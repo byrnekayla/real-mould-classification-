@@ -152,7 +152,24 @@ else:
         "Location has not been provided. Allow location access "
         "in your browser if you want to look up your general area."
     )
+st.divider()
+st.subheader("🧹 Find mould removal services near you")
 
+if area:
+    from urllib.parse import quote_plus
+
+    search_query = quote_plus(f"mould removal services near {area}, Ireland")
+    maps_url = f"https://www.google.com/maps/search/?api=1&query={search_query}"
+
+    st.link_button(
+        "🔎 Find mould removal services near me",
+        maps_url,
+    )
+else:
+    st.info(
+        "Allow location access above to find mould removal services "
+        "near your general area."
+    )
 
 # ------------------------------
 # MOULD IMAGE CLASSIFICATION
