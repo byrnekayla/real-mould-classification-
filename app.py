@@ -12,7 +12,7 @@ from pathlib import Path
 
 st.set_page_config(
     page_title="Mould Visual Classifier",
-    page_icon="🔬",
+    page_icon=Image.open("mould_icon.png"),
     layout="wide",
 )
 # Connect to Google Sheets
